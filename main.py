@@ -1,11 +1,29 @@
+from flask import *
 import requests
 import json
 
-API_KEY = "tLnJZ1kb5BRj"
-PROJECT_TOKEN = "tu8tS2QaOuwJ"
-RUN_TOKEN = "tUyEkiT3xuD"
+app = Flask(__name__)
 
-response = requests.get(f'https://www.parsehub.com/api/v2/{PROJECT_TOKEN}/last_ready_run/data', params={"api_key":API_KEY})
-print(response.text)
-data = json.loads(response.text)
-print(data)
+
+url = "https://covid-19-tracking.p.rapidapi.com/v1/usa"
+
+headers = {
+	"X-RapidAPI-Key": "e04e892d93msh8f59f3d316df947p12c47cjsn8d90c3cafc8e",
+	"X-RapidAPI-Host": "covid-19-tracking.p.rapidapi.com"
+}
+
+response = requests.request("GET", url, headers=headers)
+response = dict(response.json())
+print(response)
+
+
+@app.route('/')
+def home():
+    response = requests.request("GET", url, headers=headers)
+    response = dict(response.json())
+    print(response['New Cases_text'])
+    return render_template('home.html', response=response)
+
+
+if __name__ == '__main__':
+    app.run()
