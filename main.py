@@ -4,7 +4,6 @@ import json
 
 app = Flask(__name__)
 
-
 url = "https://covid-19-tracking.p.rapidapi.com/v1/usa"
 
 headers = {
@@ -21,7 +20,7 @@ print(response)
 def home():
     response = requests.request("GET", url, headers=headers)
     response = dict(response.json())
-    print(response)
+    print(response.__dict__)
     return render_template('home.html', response=response)
 
 
