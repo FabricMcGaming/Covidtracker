@@ -21,7 +21,7 @@ print(response)
 def home():
     response = requests.request("GET", url, headers=headers)
     response = dict(response.json())
-    print(response['New Cases_text'])
+    print(response)
     return render_template('home.html', response=response)
 
 
